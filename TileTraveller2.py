@@ -2,10 +2,12 @@
 # Tile Traveller
 # Fannar Hrafn Haraldsson
 # Tile Traveller
-# https://github.com/FannarHrafn/T-111-PROG-Assignment-8/blob/master/TileTraveller.py
+# https://github.com/FannarHrafn/TileTraveller2
 
 # grid contains x and o because I initially planned to print out the grid
 # but project doesn't want it, but its easy to add now in the future
+import random
+
 grid = [
     [["(E)ast or (S)outh", "x"], ["(E)ast or (W)est", "x"], ["(S)outh or (W)est", "x"]],
     [["(N)orth or (E)ast or (S)outh", "x"], ["(S)outh or (W)est", "x"], ["(N)orth or (S)outh", "x"]],
@@ -26,7 +28,9 @@ def travel_printer(travel_string):
 # ask user for direction until user inputs a valid direction
 def get_direction(travel_string):
     while True:
-        direction = input("Direction: ")
+        #random input from list
+        print("Direction: ")
+        direction = random.choice(directions_list)
         if direction.upper() in travel_string:
             return direction.upper()
         else:
@@ -59,8 +63,9 @@ def coin_giver(grid,curr_pos,coins):
     coin_pos_list =  [grid[1][0], grid[1][1], grid[0][1], grid[1][2]]
     #check if user is in of these locations
     if grid[curr_pos[0]][curr_pos[1]] in coin_pos_list:
-        #ask for y/n
-        user_input = input("Pull a lever (y/n): ")
+        #random input from list
+        print("Pull a lever (y/n): ")
+        user_input = random.choice(y_or_n_list)
         #give 1 coin if yes else just return with nothing gained
         if user_input == "y" or user_input == "Y":
             coins += 1
@@ -79,6 +84,12 @@ def play_again():
 # starting position
 curr_pos = [2, 0]
 coins = 0
+moves = 0
+#get random seed
+user_seed = int(input("Input seed: "))
+random.seed(user_seed)
+y_or_n_list = ["y","n"]
+directions_list = ["N","S","W","E"]
 
 while True:
     #check for coin lever
@@ -92,9 +103,11 @@ while True:
     # make a new curr_pos and change the position on the grid
     curr_pos, grid = new_pos(curr_pos, direction, grid)
     if grid[curr_pos[0]][curr_pos[1]] == grid[2][2]:
-        print("Victory! Total coins " + str(coins)+ ".")
-        user_input = input("Play again (y/n): ")
+        print("Victory! Total coins " + str(coins)+ ". Moves " + str(moves) + ".")
+        print("Play again (y/n): ")
+        user_input = random.choice(y_or_n_list)
         if user_input == "y" or user_input == "Y":
             curr_pos, coins = play_again()
         else:
             break
+    moves +=1
