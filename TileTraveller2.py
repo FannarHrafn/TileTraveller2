@@ -71,6 +71,10 @@ def coin_giver(grid,curr_pos,coins):
     else:
         return coins
 
+def play_again():
+    #reset curr_pos and coins back to starting values
+    return [2,0], 0
+
 
 # starting position
 curr_pos = [2, 0]
@@ -89,4 +93,8 @@ while True:
     curr_pos, grid = new_pos(curr_pos, direction, grid)
     if grid[curr_pos[0]][curr_pos[1]] == grid[2][2]:
         print("Victory! Total coins " + str(coins)+ ".")
-        break
+        user_input = input("Play again (y/n): ")
+        if user_input == "y" or user_input == "Y":
+            curr_pos, coins = play_again()
+        else:
+            break
